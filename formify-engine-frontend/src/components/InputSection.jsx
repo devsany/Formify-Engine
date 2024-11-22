@@ -30,21 +30,21 @@ const Input = () => {
 
     return result;
   };
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = (values) => {
     console.log("the from values", values);
     setData([...data, values]);
     addItem([...data, values]);
     // generateRandomString(8);
     // Reset the form with a new random ID
-    resetForm({
-      values: {
-        id: generateRandomString(8), // Generate a new ID
-        type: "",
-        name: "",
-        placeholder: "",
-        label: "",
-      },
-    });
+    // resetForm({
+    //   values: {
+    //     id: generateRandomString(8), // Generate a new ID
+    //     type: "",
+    //     name: "",
+    //     placeholder: "",
+    //     label: "",
+    //   },
+    // });
   };
 
   const initialValues = {
@@ -58,7 +58,7 @@ const Input = () => {
   const validate = (values) => {
     const errors = {};
     if (!values.type) {
-      errors.type = "Required";
+      errors.type = "Required.";
     }
     if (!values.name) {
       errors.name = "Required";
