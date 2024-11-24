@@ -2,27 +2,29 @@ import React, { useContext, useState } from "react";
 import { DataContext } from "./store/Context";
 
 const MainFile = () => {
+  // Initial state: an object to hold values for each input field
   const [formData, setFormData] = useState({});
-  const { items, removeItem } = useContext(DataContext);
+  const { items, removeItem, submitMainFormData, mainFormData } =
+    useContext(DataContext);
 
   console.log("All the items here", items);
 
-  // Handle form input change
+  // Handle changes to input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Dynamically update only the field corresponding to the 'name' of the input
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value, // Ensures that only the corresponding field is updated
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value, // Dynamically set the value for the field
     }));
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData); // Log the form data on submit
+    console.log("Form Submitted:", formData);
+    submitMainFormData(formData);
   };
-
+  console.log("value of main form", mainFormData);
   return (
     <div>
       <div>Show Section</div>
@@ -43,9 +45,8 @@ const MainFile = () => {
                     placeholder={field.placeholder}
                     name={field.name}
                     id={field.name}
-                    // Make sure each field uses its specific name to pull value from `formData`
-                    value={formData[field.name] || ""}
-                    onChange={handleChange}
+                    value={formData[field.name] || ""} // Dynamically bind the form data for each field
+                    onChange={handleChange} // Trigger the change handler on each input change
                     style={{ padding: "8px", width: "100%" }}
                   />
                 </div>

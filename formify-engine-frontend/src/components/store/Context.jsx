@@ -6,6 +6,7 @@ export const DataContext = createContext();
 // Create a Provider Component
 export const DataProvider = ({ children }) => {
   const [items, setItems] = useState([]);
+  const [mainFormData, setMainFormData] = useState({});
 
   const addItem = (newItem) => {
     setItems((prevItems) => [...prevItems, newItem]);
@@ -24,10 +25,20 @@ export const DataProvider = ({ children }) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
     console.log(items);
   };
-
+  const submitMainFormData = (value) => {
+    setMainFormData(value);
+  };
   return (
     <DataContext.Provider
-      value={{ items, setItems, addItem, updateItem, removeItem }}
+      value={{
+        items,
+        setItems,
+        addItem,
+        updateItem,
+        removeItem,
+        submitMainFormData,
+        mainFormData,
+      }}
     >
       {children}
     </DataContext.Provider>
