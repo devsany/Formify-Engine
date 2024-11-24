@@ -7,48 +7,47 @@ import React, {
 } from "react";
 import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import { DataContext } from "./store/Context";
+const generateRandomNumber1 = (length) => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
 
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+
+  return result; // Random number between 0 and 9999
+};
 const Input = () => {
   const [data, setData] = useState([]);
   const { addItem } = useContext(DataContext);
-  //   const formik = useFormik({
-  //     initialValues,
-  //     onSubmit,
-  //     validate,
-  //   //   });
-  //   console.log(formik.errors);
-  //   console.log("visited input ", formik.touched);
-  const generateRandomString = (length) => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
+  const [randomNumber, setRandomNumber] = useState("");
+  const [formId, setFormId] = useState(generateRandomNumber1(8));
 
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters[randomIndex];
-    }
-
-    return result;
-  };
-  const onSubmit = (values) => {
-    console.log("the from values", values);
+  const onSubmit = (values, { resetForm }) => {
+    // console.log("the from values", values);
     setData([...data, values]);
-    addItem([...data, values]);
-    // generateRandomString(8);
-    // Reset the form with a new random ID
-    // resetForm({
-    //   values: {
-    //     id: generateRandomString(8), // Generate a new ID
-    //     type: "",
-    //     name: "",
-    //     placeholder: "",
-    //     label: "",
-    //   },
-    // });
+    // context globel data management
+    addItem(values);
+    // Reset the form after submission
+    const newId = generateRandomNumber1(8);
+    // Update the formId state
+    setFormId(newId);
+    resetForm({
+      values: {
+        id: newId,
+        type: "",
+        name: "",
+        placeholder: "",
+        label: "",
+      },
+    });
   };
-
+  console.log(data);
+  console.log(randomNumber);
   const initialValues = {
-    id: generateRandomString(8),
+    id: formId,
     type: "",
     name: "",
     placeholder: "",

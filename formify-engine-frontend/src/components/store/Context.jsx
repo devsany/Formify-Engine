@@ -8,9 +8,10 @@ export const DataProvider = ({ children }) => {
   const [items, setItems] = useState([]);
 
   const addItem = (newItem) => {
-    setItems(newItem);
+    setItems((prevItems) => [...prevItems, newItem]);
   };
 
+  console.log(items);
   const updateItem = (id, updatedData) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
