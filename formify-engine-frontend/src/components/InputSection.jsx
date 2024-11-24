@@ -61,13 +61,13 @@ const Input = () => {
       errors.type = "Required.";
     }
     if (!values.name) {
-      errors.name = "Required";
+      errors.name = "Required.";
     }
     if (!values.placeholder) {
-      errors.placeholder = "Required";
+      errors.placeholder = "Required.";
     }
     if (!values.label) {
-      errors.label = "Required";
+      errors.label = "Required.";
     }
 
     return errors;
